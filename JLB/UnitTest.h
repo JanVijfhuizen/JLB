@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-class UnitTest final
+namespace jlb
 {
-public:
-	static void Run();
-};
+	class UnitTest final
+	{
+	public:
+		static void Run();
+	};
+}

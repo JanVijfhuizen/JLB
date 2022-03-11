@@ -2,6 +2,6 @@
 
 int main()
 {
-	UnitTest::Run();
+	jlb::UnitTest::Run();
 	return 0;
 }

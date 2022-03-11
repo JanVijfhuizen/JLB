@@ -139,18 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="LinearAllocator.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="StringView.cpp" />
     <ClCompile Include="UnitTest.cpp" />
-    <ClCompile Include="VectorView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayView.h" />
+    <ClInclude Include="Array.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="LinearAllocator.h" />
+    <ClInclude Include="StringView.h" />
     <ClInclude Include="UnitTest.h" />
-    <ClInclude Include="VectorView.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
