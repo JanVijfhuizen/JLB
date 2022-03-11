@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cassert>
 #include "ArrayView.h"
+#include "VectorView.h"
 
 void UnitTest::Run()
 {
@@ -111,6 +112,33 @@ void UnitTest::Run()
 
 			allocator.Free();
 			allocator.Free();
+		}
+
+		ArrayView<int> arr{};
+		arr.Allocate(allocator, 4);
+		arr[1] = 4;
+		arr[2] = 6;
+		arr.Swap(1, 2);
+		assert(arr[1] == 6 && arr[2] == 4);
+	}
+
+	{
+		LinearAllocator allocator{ 1024 };
+		VectorView<int> vec{};
+		vec.Allocate(allocator, 12);
+		vec.SetCount(2);
+		vec[0] = 2;
+		vec[1] = 4;
+		vec.Add(6);
+		vec[3] = 8;
+
+		int n = 0;
+		for (auto& i : vec)
+		{
+			n++;
+			assert(n <= 3);
+			assert(i != 8);
+			assert(n * 2 == i);
 		}
 	}
 }
