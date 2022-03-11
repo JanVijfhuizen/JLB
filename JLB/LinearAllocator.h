@@ -13,7 +13,9 @@ public:
 	~LinearAllocator();
 
 	LinearAllocator(LinearAllocator& other) = delete;
+	LinearAllocator(LinearAllocator&& other) = delete;
 	LinearAllocator& operator=(LinearAllocator& other) = delete;
+	LinearAllocator& operator=(LinearAllocator&& other) = delete;
 
 	/// <summary>
 	/// Allocates a chunk of memory.
