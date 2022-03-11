@@ -40,6 +40,13 @@ public:
 	virtual void Allocate(LinearAllocator& allocator, size_t size, T* src);
 
 	/// <summary>
+	/// Swaps values at the defined indexes.
+	/// </summary>
+	/// <param name="a">Index A.</param>
+	/// <param name="b">Index B.</param>
+	void Swap(size_t a, size_t b);
+
+	/// <summary>
 	/// Get a raw pointer to the managed memory.
 	/// </summary>
 	/// <returns>Raw pointer to the managed memory.</returns>
@@ -83,6 +90,15 @@ void ArrayView<T>::Allocate(LinearAllocator& allocator, const size_t size, T* sr
 	_length = size;
 
 	memcpy(_memory, src, size * sizeof(T));
+}
+
+template <typename T>
+void ArrayView<T>::Swap(const size_t a, const size_t b)
+{
+	assert(a < _length && b < _length);
+	const T temp = _memory[a];
+	_memory[a] = _memory[b];
+	_memory[b] = temp;
 }
 
 template <typename T>
