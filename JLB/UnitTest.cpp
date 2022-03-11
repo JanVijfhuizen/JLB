@@ -90,5 +90,27 @@ void UnitTest::Run()
 				assert(array[j].b == str.b);
 			}
 		}
+
+		LinearAllocator allocator{ 1024 };
+		ArrayView<TestStruct> array{};
+		array.Allocate(allocator, 12 + rand() % 12, str);
+
+		for (auto& test : array)
+		{
+			assert(test.i == str.i);
+			assert(test.b == str.b);
+		}
+
+		for (int i = 0; i < 25; ++i)
+		{
+			ArrayView<TestStruct> a{};
+			a.Allocate(allocator, 6 + rand() % 12);
+
+			ArrayView<TestStruct> b{};
+			b.Allocate(allocator, a.GetLength(), a.GetData());
+
+			allocator.Free();
+			allocator.Free();
+		}
 	}
 }
