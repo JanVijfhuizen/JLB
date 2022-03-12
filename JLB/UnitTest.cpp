@@ -7,6 +7,7 @@
 #include "StringView.h"
 #include <iostream>
 #include "Stack.h"
+#include "HashMap.h"
 
 namespace jlb
 {
@@ -173,6 +174,26 @@ namespace jlb
 			stack.Pop();
 
 			assert(stack.Peek() == i);
+		}
+
+		// Hashmap.
+		{
+			LinearAllocator allocator{ 1024 };
+
+			struct TestStruct final
+			{
+				int i = -1;
+
+				bool operator ==(TestStruct& other) const
+				{
+					return i == other.i;
+				}
+			} t;
+			t.i = 5;
+
+			HashMap<TestStruct> hashMap;
+			hashMap.Allocate(allocator, 24);
+			assert(hashMap.Contains(t));
 		}
 	}
 }

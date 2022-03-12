@@ -146,7 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="HashMap.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="KeyPair.h" />
     <ClInclude Include="LinearAllocator.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="StringView.h" />
