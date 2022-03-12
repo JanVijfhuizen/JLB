@@ -17,6 +17,13 @@ namespace jlb
 		/// </summary>
 		/// <param name="value">The value to be added to the vector.</param>
 		/// <returns>The added value inside the vector.</returns>
+		T& Add(T& value = {});
+		/// <summary>
+		/// Place a value in the front of the vector and increase it's size by one.<br>
+		/// Cannot exceed the capacity of the managed memory.
+		/// </summary>
+		/// <param name="value">The value to be added to the vector.</param>
+		/// <returns>The added value inside the vector.</returns>
 		T& Add(T&& value = {});
 		/// <summary>
 		/// Remove the value at a certain index.
@@ -39,6 +46,13 @@ namespace jlb
 		// The amount of values in this vector.
 		size_t _count = 0;
 	};
+
+	template <typename T>
+	T& Vector<T>::Add(T& value)
+	{
+		assert(_count + 1 <= Array<T>::GetLength());
+		return Array<T>::operator[](_count++) = value;
+	}
 
 	template <typename T>
 	T& Vector<T>::Add(T&& value)

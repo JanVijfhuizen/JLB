@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "StringView.h"
 #include <iostream>
+#include "Stack.h"
 
 namespace jlb
 {
@@ -156,6 +157,22 @@ namespace jlb
 			assert(s3 == string);
 			assert(s2 == "bye");
 			std::cout << s2 << std::endl;
+		}
+
+		// Stacks.
+		{
+			LinearAllocator allocator{ 1024 };
+			Stack<int> stack{};
+			stack.Allocate(allocator, 12);
+
+			int i = 2;
+
+			stack.Push(i);
+			stack.Push(3);
+
+			stack.Pop();
+
+			assert(stack.Peek() == i);
 		}
 	}
 }
