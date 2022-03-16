@@ -20,7 +20,7 @@ namespace jlb
 		Array& operator=(Array&& other) = delete;
 		virtual ~Array() = default;
 
-		[[nodiscard]] T& operator[](size_t index);
+		[[nodiscard]] virtual T& operator[](size_t index);
 		[[nodiscard]] size_t GetLength() const;
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace jlb
 	/// Random insertions are not supported, you can only add or remove the newest entries.
 	/// </summary>
 	template <typename T>
-	class Stack final : public Array<T>
+	class Stack : public Array<T>
 	{
 	public:
 		/// <summary>
