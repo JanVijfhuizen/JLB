@@ -42,6 +42,12 @@ namespace jlb
 		virtual void Allocate(LinearAllocator& allocator, size_t size, T* src);
 
 		/// <summary>
+		/// Frees the memory used for the array.
+		/// </summary>
+		/// <param name="allocator">Allocator to free it with.</param>
+		virtual void Free(LinearAllocator& allocator);
+
+		/// <summary>
 		/// Swaps values at the defined indexes.
 		/// </summary>
 		/// <param name="a">Index A.</param>
@@ -92,6 +98,12 @@ namespace jlb
 		_length = size;
 
 		memcpy(_memory, src, size * sizeof(T));
+	}
+
+	template <typename T>
+	void Array<T>::Free(LinearAllocator& allocator)
+	{
+		allocator.Free();
 	}
 
 	template <typename T>

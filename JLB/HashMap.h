@@ -45,7 +45,7 @@ namespace jlb
 	protected:
 		[[nodiscard]] size_t GetHash(T& value);
 		[[nodiscard]] bool Contains(T& value, size_t& outIndex);
-		void Insert(size_t index, T& value);
+		void Insert(size_t hash, T& value);
 
 		KeyPair<T>& operator[](size_t index) override;
 		Iterator<KeyPair<T>> begin() override;
@@ -123,26 +123,20 @@ namespace jlb
 		const size_t length = Array<KeyPair<T>>::GetLength();
 		assert(_count < length);
 
-		int steps = 0;
-
 		// Get and use the hash as an index.
 		const size_t hash = GetHash(value);
-		bool groupFound = false;
+
 		for (size_t i = 0; i < length; ++i)
 		{
-			++steps;
-
 			const size_t index = (hash + i) % length;
 			auto& keyPair = Array<KeyPair<T>>::operator[](index);
-			// Set to true the first time the key group has been found.
-			groupFound = groupFound ? true : keyPair.key == index;
-			// Once this leaves the key group while it hasn't found the value, return nullptr.
-			// OR if the keypair key is the default.
-			if (groupFound && keyPair.key != hash || keyPair.key == SIZE_MAX)
-				return false;
-			// If this isn't in the key group just yet.
-			if (!groupFound)
+
+			// If the hash is different, continue.
+			if (keyPair.key != hash)
 				continue;
+
+			// If the actual value has been found.
+			// We have to compare the values due to the fact that one hash might be generated more than once.
 			if (keyPair.value == value)
 			{
 				outIndex = index;
@@ -154,7 +148,7 @@ namespace jlb
 	}
 
 	template <typename T>
-	void HashMap<T>::Insert(const size_t index, T& value)
+	void HashMap<T>::Insert(const size_t hash, T& value)
 	{
 		const size_t length = Array<KeyPair<T>>::GetLength();
 		assert(_count < length);
@@ -165,44 +159,17 @@ namespace jlb
 
 		for (size_t i = 0; i < length; ++i)
 		{
-			const size_t modIndex = (index + i) % length;
-			auto& keyPair = Array<KeyPair<T>>::operator[](modIndex);
-			// Continue iterating until it finds a key with a higher value than the current hash.
-			// If so, move them forward and place this one in it.
-			if (keyPair.key <= index)
+			const size_t index = (hash + i) % length;
+			auto& keyPair = Array<KeyPair<T>>::operator[](index);
+			// Set to true the first time the key group has been found.
+			if (keyPair.key != SIZE_MAX)
 				continue;
 
-			// See how many values need to step forward.
-			size_t steps = 0;
-			for (size_t j = i; j < length; ++j)
-			{
-				const size_t mod2Index = (modIndex + j) % length;
-				auto& otherKeyPair = Array<KeyPair<T>>::operator[](mod2Index);
-				if (otherKeyPair.key == SIZE_MAX)
-					break;
-				++steps;
-			}
-
-			// Move all of them one step forward.
-			for (size_t j = 0; j < steps; ++j)
-			{
-				const size_t fromIndex = (modIndex + steps - j - 1) % length;
-				const size_t toIndex = (modIndex + steps - j) % length;
-
-				auto& from = Array<KeyPair<T>>::operator[](fromIndex);
-				auto& to = Array<KeyPair<T>>::operator[](toIndex);
-
-				to = from;
-			}
-
-			keyPair.key = index;
+			keyPair.key = hash;
 			keyPair.value = value;
 			++_count;
-			return;
+			break;
 		}
-
-		// Should not reach this part of the code.
-		assert(false);
 	}
 
 	template <typename T>

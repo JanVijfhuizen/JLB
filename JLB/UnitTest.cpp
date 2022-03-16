@@ -116,8 +116,8 @@ namespace jlb
 				Array<TestStruct> b{};
 				b.Allocate(allocator, a.GetLength(), a.GetData());
 
-				allocator.Free();
-				allocator.Free();
+				a.Free(allocator);
+				b.Free(allocator);
 			}
 
 			Array<int> arr{};
