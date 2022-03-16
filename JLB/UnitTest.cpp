@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Stack.h"
 #include "HashMap.h"
+#include "Heap.h"
 
 namespace jlb
 {
@@ -225,6 +226,38 @@ namespace jlb
 
 			hashMap.Insert(t);
 			assert(hashMap.Contains(t));
+		}
+
+		// Heap.
+		{
+			LinearAllocator allocator{ 1024 };
+			struct TestStruct final
+			{
+				int i = -1;
+
+				bool operator ==(TestStruct& other) const
+				{
+					return i == other.i;
+				}
+			} t;
+			t.i = 5;
+
+			TestStruct u{};
+			u.i = 6;
+
+			Heap<TestStruct> heap;
+			heap.Allocate(allocator, 8);
+			heap.hasher = [](TestStruct& str)
+			{
+				return static_cast<size_t>(str.i);
+			};
+
+			heap.Insert(u);
+			heap.Insert(t);
+			assert(heap.GetCount() == 2);
+			assert(heap.Peek().i == t.i);
+			heap.Clear();
+			assert(heap.GetCount() == 0);
 		}
 	}
 }

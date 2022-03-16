@@ -37,15 +37,15 @@ namespace jlb
 		void Erase(T& value);
 
 		/// <summary>
-		/// Gets the amount of values in the vector.
+		/// Gets the amount of values in the HashMap.
 		/// </summary>
-		/// <returns>Amount of values in the vector.</returns>
+		/// <returns>Amount of values in the HashMap.</returns>
 		[[nodiscard]] size_t GetCount() const;
 
 	protected:
 		[[nodiscard]] size_t GetHash(T& value);
 		[[nodiscard]] bool Contains(T& value, size_t& outIndex);
-		void Insert(size_t hash, T& value);
+		void _Insert(T& value);
 
 		KeyPair<T>& operator[](size_t index) override;
 		Iterator<KeyPair<T>> begin() override;
@@ -58,13 +58,13 @@ namespace jlb
 	template <typename T>
 	void HashMap<T>::Insert(T& value)
 	{
-		Insert(GetHash(value), value);
+		_Insert(value);
 	}
 
 	template <typename T>
 	void HashMap<T>::Insert(T&& value)
 	{
-		Insert(GetHash(value), value);
+		_Insert(value);
 	}
 
 	template <typename T>
@@ -148,7 +148,7 @@ namespace jlb
 	}
 
 	template <typename T>
-	void HashMap<T>::Insert(const size_t hash, T& value)
+	void HashMap<T>::_Insert(T& value)
 	{
 		const size_t length = Array<KeyPair<T>>::GetLength();
 		assert(_count < length);
@@ -156,6 +156,8 @@ namespace jlb
 		// If it already contains this value, replace the old one with the newer value.
 		if (Contains(value))
 			return;
+
+		const size_t hash = GetHash(value);
 
 		for (size_t i = 0; i < length; ++i)
 		{
