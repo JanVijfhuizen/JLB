@@ -9,6 +9,7 @@
 #include "Stack.h"
 #include "HashMap.h"
 #include "Heap.h"
+#include "Tuple.h"
 
 namespace jlb
 {
@@ -258,6 +259,23 @@ namespace jlb
 			assert(heap.Peek().i == t.i);
 			heap.Clear();
 			assert(heap.GetCount() == 0);
+		}
+
+		// Tuple.
+		{
+			struct TestStruct final
+			{
+				int i;
+				bool b;
+				float f;
+			};
+
+			Tuple<int, float, TestStruct> tuple{};
+			
+			Get<0>(tuple) = 5;
+			Get<2>(tuple).i = 6;
+			assert(Get<0>(tuple) == 5);
+			assert(Get<2>(tuple).i == 6);
 		}
 	}
 }
