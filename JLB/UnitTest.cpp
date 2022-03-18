@@ -270,12 +270,16 @@ namespace jlb
 				float f;
 			};
 
-			Tuple<int, float, TestStruct> tuple{};
+			using Enemy = Tuple<int, float, TestStruct>;
+			Enemy tuple{};
 			
 			Get<0>(tuple) = 5;
 			Get<2>(tuple).i = 6;
 			assert(Get<0>(tuple) == 5);
 			assert(Get<2>(tuple).i == 6);
+
+			assert(Enemy::ContainsType<TestStruct>());
+			assert(!Enemy::ContainsType<unsigned int>());
 		}
 	}
 }
