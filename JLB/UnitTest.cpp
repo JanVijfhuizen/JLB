@@ -277,9 +277,65 @@ namespace jlb
 			Get<2>(tuple).i = 6;
 			assert(Get<0>(tuple) == 5);
 			assert(Get<2>(tuple).i == 6);
+		}
 
-			assert(Enemy::ContainsType<TestStruct>());
-			assert(!Enemy::ContainsType<unsigned int>());
+		// ECS-like.
+		{
+			LinearAllocator allocator{ 1024 };
+
+			struct Transform
+			{
+				float rotation;
+			};
+
+			struct Renderer
+			{
+				
+			};
+
+			struct Creature
+			{
+				
+			};
+
+			struct PlayerBehaviour
+			{
+				enum
+				{
+					Transform,
+					Renderer,
+					Creature,
+					This
+				};
+			};
+
+			struct EnemyBehaviour
+			{
+				enum
+				{
+					Transform,
+					Renderer,
+					Creature,
+					This
+				};
+			};
+
+			struct Light
+			{
+				
+			};
+
+			using Player = Tuple<Transform, Renderer, Creature, PlayerBehaviour>;
+			using Enemy = Tuple<Transform, Renderer, Creature, EnemyBehaviour>;
+			using PointLight = Tuple<Transform, Light>;
+
+			Player player{};
+			Get<PlayerBehaviour::Transform>(player).rotation += 5;
+
+			Vector<Enemy> enemies{};
+			enemies.Allocate(allocator, 10);
+			auto& enemy = enemies.Add();
+			Get<EnemyBehaviour::Transform>(enemy).rotation -= 5;
 		}
 	}
 }

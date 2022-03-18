@@ -27,9 +27,6 @@
     <ClCompile Include="StringView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cecsar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinearAllocator.h">
@@ -60,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Heap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cecsar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tuple.h">
