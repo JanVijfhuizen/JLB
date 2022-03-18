@@ -152,9 +152,9 @@ namespace jlb
 
 		// Strings.
 		{
-			StringView string = "hello";
-			StringView s2 = "bye";
-			StringView s3 = "hello";
+			jlb::StringView string = "hello";
+			jlb::StringView s2 = "bye";
+			jlb::StringView s3 = "hello";
 
 			assert(string != s2);
 			assert(s3 == string);
