@@ -17,7 +17,7 @@ namespace jlb
 		/// </summary>
 		/// <param name="value">The value to be added to the vector.</param>
 		/// <returns>The added value inside the vector.</returns>
-		T& Add(T& value = {});
+		T& Add(T& value);
 		/// <summary>
 		/// Place a value in the front of the vector and increase it's size by one.<br>
 		/// Cannot exceed the capacity of the managed memory.
